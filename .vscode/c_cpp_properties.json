@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+               "${workspaceFolder}/**",                          
+                "/opt/log4cplus-2.0.2/include/**",
+                "/root/tools/boost_1_73_0/**",
+                "/opt/libevent_2.2.12/include/**",
+                "/opt/libzmp/include/**"                                
+            ],
+            "defines": [           
+                                               
+            ],
+            "forcedInclude": [
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
