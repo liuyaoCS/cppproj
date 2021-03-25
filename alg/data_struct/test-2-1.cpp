@@ -18,7 +18,7 @@ s = ""
 class Solution {
 public:
     char firstUniqChar(string str) {
-        if(str.size()==0)return ' '; 
+        if(str.length()==0)return ' '; 
         vector<char> hash(256); 
         for(int i =0;i<str.length();i++)hash[str[i]]++; 
         for(int i=0;i<str.length();i++){  
@@ -28,3 +28,9 @@ public:
         return ' ';  
     }
 };
+int main(){
+    Solution s;
+    string str = "abaccdeff";
+    cout << s.firstUniqChar(str) << endl;
+    return 0;
+}

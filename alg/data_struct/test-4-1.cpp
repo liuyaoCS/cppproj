@@ -6,11 +6,21 @@ using namespace std;
 
 /**
 树的遍历（递归/非递归）
+对于非递归算法：
+1 每次循环（循环采用while，起始从根结点开始，结尾栈为空（保证出栈）且节点为空（保证入栈）），
+    节点非空，
+        入栈 [业务：前序，输出]
+        p=p->left
+    节点空，
+        出栈 [业务：中序|后序，输出] //后序要处理完右节点的才能出栈
+        p=top->right //后序没处理完右节点；已经处理完右节点则null：因为top->right已经出栈,所以也要保存上一个出栈节点
+2 要么入栈时输出，要么出栈时输出
 */
 
 struct Node{
     int val;
     Node* left, *right;
+    Node(int v,Node* l,Node* r):val(v),left(l),right(r){}
 };
 class Solution {
    
@@ -32,13 +42,29 @@ public:
             if(p->left!=nullptr)stack.push(p->left);
         }
     }
+    //入栈输出，保持和中序后序一样逻辑（万能逻辑：设置p=p->left 或 p=p->right遍历二叉树）
+    void preOrder3(Node* root){
+        if(root==nullptr)return;
+        stack<Node*> stack;
+        Node *p=root;
+        while(p!=nullptr || !stack.empty()){
+            if(p!=nullptr){
+                stack.push(p);
+                cout << p->val << endl;
+                p = p->left;
+            }else{
+                Node *top = stack.top();stack.pop();
+                p = top->right;
+            }
+        } 
+    }
     void inOrder(Node* root){
         if(root==nullptr)return;
         preOrder(root->left);
         cout << root->val << endl;
         preOrder(root->right);
     }
-    //通过设置p=p->left 或 p=p->right遍历二叉树
+    //出栈输出
     void inOrder2(Node* root){
         if(root==nullptr)return;
         stack<Node*> stack;
@@ -93,3 +119,10 @@ public:
         }
     }
 };
+int main(){
+    Solution s;
+    Node n4(4,nullptr,nullptr),n5(5,nullptr,nullptr),n2(2,&n4,&n5),n3(3,nullptr,nullptr),n1(1,&n2,&n3);
+    s.preOrder3(&n1);
+    // s.inOrder2(&n1);
+    return 0;
+}

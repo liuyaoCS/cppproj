@@ -57,7 +57,16 @@ public:
         if(p.size()==0)return false;
         
         if(p.size()==1){
-            return p[0]=='.' || s[0]==p[0];
+            if(s.size()==1){
+                return p[0]=='.' || s[0]==p[0];
+            }else{
+                if(p[0]!='*')return false;
+                int duplicate = s[0];
+                for(int i=1;i<s.size();i++){
+                    if(s[i]!=duplicate)return false;
+                }
+            }
+            
         }
         
         int i=0,j=0;
@@ -66,7 +75,6 @@ public:
             else return isMatch(s.substr(i+1),p.substr(j+1));
         }else{
             if(s[i]!=p[j] && p[j]!='.')return isMatch(s.substr(i),p.substr(j+2));
-            //i可以取等号，以及p的可以取到j+2也是因为substring的这点特殊性
             while((i<s.size() && (s[i]==p[j] || p[j]=='.'))){
                 if(isMatch(s.substr(i),p.substr(j+2)))return true;
                 i++;
@@ -76,3 +84,8 @@ public:
         return false;
     }
 };
+int main(){
+    Solution s;
+    cout << s.isMatch("mississippi","mis*is*p*.") << endl;
+    return 0;
+}

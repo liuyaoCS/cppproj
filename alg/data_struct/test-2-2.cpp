@@ -28,6 +28,7 @@ using namespace std;
 
 class Solution {
 public:
+    //如果明确不可能为空值，就使用引用，在函数内部对于引用不需要判断是否为空，代码更简洁
     int myAtoi(string str) {
         if(str.size()==0)return 0;
         
@@ -39,9 +40,9 @@ public:
         int sign=str[i]=='-'?-1:1;
         if(str[i]=='+' || str[i]=='-')i++;
         
-        int num=0;
+        long num=0;
         while(i<=n){
-            if(str[i]>'9' || str[i])<'0')break;
+            if(str[i]>'9' || str[i]<'0')break;
             num=str[i]-'0'+num*10;
             if(num>INT32_MAX)return sign==1?INT32_MAX:INT32_MIN;
             i++;
@@ -50,3 +51,10 @@ public:
         return num*sign;
     }
 };
+int main(){
+    Solution s;
+    string ss = "123";
+    cout << s.myAtoi(ss) << endl;
+    
+    return 0;
+}
