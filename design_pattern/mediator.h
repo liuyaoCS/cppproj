@@ -24,11 +24,13 @@ public:
 
 
 class Buyer{
+private:
     Mediator* mediator = Mediator::getInstance();
 public:
     void buy();
 };
 class Seller{
+private:
     Mediator* mediator = Mediator::getInstance();
 public:
     void sell();

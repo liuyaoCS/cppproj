@@ -51,8 +51,6 @@ public:
         observerState = subject->GetState();
         cout << "observer: " << name << ", its new state is: " << observerState << endl;
     }
-    string GetState() { return observerState; }
-    void SetState(string state) { observerState = state; }
 };
 
 int main() {

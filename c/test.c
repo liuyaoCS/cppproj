@@ -73,12 +73,6 @@ void test5(){
   //相容性不具传递性(const限定符针对的是char，而不是指针)
   // char **pp=&p;
   // const char **pp0 = pp;
-  
-}
-void test6(){
-  if(-1<(unsigned)5){
-    printf("test\n");
-  }
 }
 char * const *test7_0(){
   char* const *pp=NULL;
@@ -140,10 +134,25 @@ int test14(){
   int i=1;
   printf("%d %d %d %d\n",i+2, i++,i++,i);
 }
+int test15(){
+  float a = 0;
+  if(a>0.0 || a<0.0){
+    printf("ok!\n");
+  }
+}
+struct st1
+{
+  unsigned char a:7;/*字段a占用了一个字节的7个bit*/
+  unsigned char b:2;/*字段b占用了2个bit*/
+  unsigned char c:7;/*字段c占用了7个bit*/
+}s1;
+int test16(){
+  printf("%ld\n",sizeof(struct st1));
+}
 int main(){
   // int (*ret)[20];
   // ret =  test13();
   // (*ret)[3]=12;
-  test14();
+  test16();
   return 0;
 }

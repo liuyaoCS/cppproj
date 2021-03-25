@@ -272,7 +272,11 @@ void test21(){
 //     return a+b;
 // }
 void test22(){
-  
+#ifdef __cplusplus
+    cout<<"c++" << endl;;
+#else
+    cout<<"c";
+#endif
 }
 int main(){
     // test1();
