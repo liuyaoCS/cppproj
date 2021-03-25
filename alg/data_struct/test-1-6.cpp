@@ -13,8 +13,14 @@ using namespace std;
 遍历螺旋矩阵:是指一个呈螺旋状的矩阵，它的数字由第一行开始到右边不断变大，向下变大，向左变大，向上变大，如此循环
 */
 
-
+enum{
+    d_right,
+    d_down,
+    d_left,
+    d_up
+};
 class Solution {
+    int direction;
 public:
     //线性搜索解法: 选取左下角或者右上角：位于折线递增的中心 
     bool searchMatrix(vector<vector<int> > &matrix, int target) {
@@ -40,15 +46,66 @@ public:
         int n=matrix[0].size();
         vector<vector<bool> > visited(m,vector<bool>(n));
         int i=0,j=0;
-        for(int k=0;k<m*n;k++){
-            cout << matrix[i][j];
-            visited[i][j]=true;
+        int count = 0;
+        direction = d_right;
+        visited[0][0]=true;
+        cout << matrix[0][0];
+        count = 1;
+        int step = 0;
+
+        while(count < n*m){
             
-            if(j+1<n && !visited[i][j+1])j++;
-            else if(i+1<m && !visited[i+1][j])i++;
-            else if(j-1>=0 && !visited[i][j-1])j--;
-            else if(i-1>=0 && !visited[i-1][j])i--;
+            switch (direction)
+            {
+            case d_right:
+                if(j+1 < n && !visited[i][j+1]){
+                    j++;
+                    step = 1;
+                }
+                break;
+            case d_down:
+                if(i+1 < m && !visited[i+1][j]){
+                    i++;
+                    step = 1;
+                }
+                break;
+            case d_left:
+                if(j-1 >= 0 && !visited[i][j-1]){
+                    j--;
+                    step = 1;
+                }
+                break;
+            case d_up:
+                if(i-1 >= 0 && !visited[i-1][j]){
+                    i--;
+                    step = 1;
+                }
+                break;
+            
+            default:
+                break;
+            }
+            if(step){
+                count ++;
+                cout << matrix[i][j];
+                visited[i][j]=true;
+                step = 0;
+            }else{
+                direction = (direction+1)%4;
+            }
+            
         }
     }
    
 };
+int main(){
+    Solution s;
+    vector<vector<int>> matrix={
+        {1,2,3,4},
+        {5,6,7,8},
+        {9,10,11,12},
+        {13,14,15,16}
+
+    };
+    s.print(matrix);
+}

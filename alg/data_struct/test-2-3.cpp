@@ -28,48 +28,45 @@ public:
         stack<int> numStack;
         stack<char> operStack;
         int i=0;
-        while(i<str.size() || numStack.size()>1){
-            if(i<str.size()){
-                if(str[i]>='0' && str[i]<='9')numStack.push(str[i]-'0');
-                else{
-                    if(operStack.empty())operStack.push(str[i]);
+        while(i<str.size()){
+            if(str[i]>='0' && str[i]<='9')numStack.push(str[i]-'0');
+            else{
+                if(str[i]!=')'){
+                    if(operStack.empty() ||
+                        operStack.top()=='(' || 
+                        getPrior(str[i])>getPrior(operStack.top()))operStack.push(str[i]);
                     else{
-                        if(str[i]!=')'){
-                            if(getPrior(str[i])>getPrior(operStack.top())
-                                    || operStack.top()=='(')operStack.push(str[i]);
-                            else{
-                                while(getPrior(str[i])<getPrior(operStack.top())){
-                                    int num1=numStack.top();numStack.pop();
-                                    int num2=numStack.top();numStack.pop();
-                                    char oper=operStack.top();operStack.pop();
-                                    int res=operate(num1,num2,oper);
-                                    numStack.push(res);
-                                }
-                                
-                                operStack.push(str[i]);
-                            }
-                        }else{
-                            while(operStack.top()!='('){
-                                int num1=numStack.top();numStack.pop();
-                                int num2=numStack.top();numStack.pop();
-                                char oper=operStack.top();operStack.pop();
-                                int res=operate(num1,num2,oper);
-                                numStack.push(res);        
-                            }
-                            operStack.pop();
+                        while(getPrior(str[i])<getPrior(operStack.top())){
+                            int num1=numStack.top();numStack.pop();
+                            int num2=numStack.top();numStack.pop();
+                            char oper=operStack.top();operStack.pop();
+                            int res=operate(num1,num2,oper);
+                            numStack.push(res);
                         }
                         
+                        operStack.push(str[i]);
                     }
+                }else{
+                    while(operStack.top()!='('){
+                        int num1=numStack.top();numStack.pop();
+                        int num2=numStack.top();numStack.pop();
+                        char oper=operStack.top();operStack.pop();
+                        int res=operate(num1,num2,oper);
+                        numStack.push(res);        
+                    }
+                    operStack.pop();
                 }
-                i++;
-            }else{
-                int num1=numStack.top();numStack.pop();
-                int num2=numStack.top();numStack.pop();
-                char oper=operStack.top();operStack.pop();
-                int res=operate(num1,num2,oper);
-                numStack.push(res);
+                    
+                
             }
-            
+            i++;
+        }
+        while(numStack.size()>1){
+            int num1=numStack.top();numStack.pop();
+            int num2=numStack.top();numStack.pop();
+            char oper=operStack.top();operStack.pop();
+            int res=operate(num1,num2,oper);
+            numStack.push(res);
         }
         return numStack.top();
     }
